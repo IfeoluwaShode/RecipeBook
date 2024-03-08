@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/liked_Recipes.html">Liked Recipes</a></li>
+        <li><a href="/upload_recipe.html">Upload Recipe</a></li>
+        <li><a href="/login.html">Login</a></li>
+        <!-- <li><a href="/profile.html">My Profile</a></li> -->
+      </ul>
+    </nav>
+    <section>
+      <div class="container initial">
+        <img
+          src="/RecipeBook-logos_transparent.png"
+          id="brand"
+          alt="OUR LOGO"
+        />
+        <form id="searchForm">
+          <input type="text" placeholder="Search Your Recipe..." />
+          <ion-icon name="search"></ion-icon>
+        </form>
+        <h1 id="word">Where all the answer to your craving lies</h1>
+        <div class="search-result"></div>
+      </div>
+    </section>
+    <script src="./firebase.js" type="module" />
+    <script src="work.js"></script>
+    <footer>
+      <div class="footer-bottom">
+        <p>&copy; RecipeBook. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

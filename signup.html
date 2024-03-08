@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sigup - RecipeBook</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-image: url("image3.jpg");
+        background-size: cover;
+        background-position: center;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+      }
+
+      nav ul {
+        margin: 0;
+      }
+
+      nav a {
+        color: #fff;
+      }
+
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .container {
+        margin: 20px;
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      /* h1 {
+        color: whitesmoke;
+        font-size: 28px;
+        margin-bottom: 20px;
+      } */
+
+      label {
+        color: white;
+        font-size: 16px;
+      }
+
+      input {
+        font-size: 16px;
+        width: 100% !important;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+      }
+
+      button {
+        /* background-color: #4caf50; */
+        color: #fff;
+        padding: 12px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        height: auto;
+      }
+      /* 
+      button:hover {
+        background-color: #45a049;
+      } */
+
+      a {
+        color: #4caf50;
+      }
+
+      footer {
+        background-color: #000;
+        padding: 10px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .footer-bottom {
+        /* margin-top: 20px; */
+      }
+
+      #username,
+      #password {
+        width: 400px;
+      }
+      label {
+        font-weight: 400;
+      }
+    </style>
+
+    <!-- for toast -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <main>
+      <section
+        class="container bg-black/20 backdrop-blur-md max-w-[86%] sm:max-w-[80%] md:max-w-[40%] shadow-md"
+      >
+        <h1 class="text-xl font-bold text-white mb-3 text-center">
+          Create a
+          <span class="text-black"
+            >Recipe<span class="text-green-500">Book</span></span
+          >
+          Account
+        </h1>
+        <!-- <h1>Login to RecipeBook</h1> -->
+        <form id="form" action="/">
+          <div class="field">
+            <label for="fullname">Fullname</label>
+            <input
+              type="text"
+              id="fullname"
+              name="fullname"
+              class="w-full rounded-md border-none outline-none h-[40px] px-5 bg-black/10 placeholder:text-white/50 text-white"
+              placeholder="Ife Shode"
+              required
+            />
+          </div>
+          <div class="field mt-3">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="username"
+              name="email"
+              class="w-full rounded-md border-none outline-none h-[40px] px-5 bg-black/10 placeholder:text-white/50 text-white"
+              placeholder="ifekoder@gmail.com"
+              required
+            />
+          </div>
+
+          <div class="field mt-3">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="rounded-md border-none outline-none h-[40px] px-5 bg-black/10 placeholder:text-white/50 text-white"
+              placeholder="*******"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="rounded-md w-full flex justify-center items-center h-[40px] mt-5 transition text-white font-medium duration-500 bg-black/90 hover:bg-black/60"
+            id="submit-btn"
+          >
+            <span class="submit-text">Signup</span>
+
+            <div
+              class="loader hidden border-gray-300 h-5 w-5 animate-spin rounded-full border-[2px] border-t-green-600"
+            />
+          </button>
+
+          <p class="text-center mt-1 text-white/70">
+            Already have an account?
+            <a class="text-white" href="/login.html">Login</a>
+          </p>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-bottom">
+        <p>&copy; RecipeBook. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script defer type="module">
+      import { signup, updateProfile } from "./firebase.js";
+      var notyf = new Notyf();
+
+      const form = document.querySelector("#form");
+      const fullname = document.querySelector("#fullname");
+      const username = document.querySelector("#username");
+      const password = document.querySelector("#password");
+      const button = document.querySelector("#submit-btn");
+
+      const buttonText = document.querySelector(".submit-text");
+      const loader = document.querySelector(".loader");
+
+      const load = () => {
+        buttonText.classList.add("hidden");
+        loader.classList.remove("hidden");
+      };
+
+      const stopLoad = () => {
+        buttonText.classList.remove("hidden");
+        loader.classList.add("hidden");
+      };
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        load();
+        const credentials = {
+          email: username.value,
+          password: password.value,
+        };
+        signup(credentials)
+          .then(async (userCredential) => {
+            console.log(userCredential);
+            const user = userCredential.user;
+
+            await updateProfile(user, {
+              displayName: fullname.value,
+            });
+
+            notyf.success(
+              `Successfully Signup up! ${
+                fullname.value.split(" ")[0] ?? fullname
+              }`
+            );
+
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 2000);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(error, errorCode);
+
+            if (errorCode === "auth/email-already-in-use") {
+              return notyf.error("Email is Already In Use!");
+            }
+
+            notyf.error(errorMessage);
+          })
+          .finally(() => {
+            stopLoad();
+          });
+      });
+    </script>
+  </body>
+</html>

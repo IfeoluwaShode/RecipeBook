@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<a href="main.html">
+    <img src="./Back_Arrow.svg.png" alt="Back to home page">
+</a>
+<style>
+    h1{
+        text-align: left;
+    }
+    img {
+        width: 50px;
+        height: auto;
+    }
+    body{
+        background-image: url("https://images.unsplash.com/photo-1535473895227-bdecb20fb157?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    }
+</style>
+<body>
+    
+
+    <!-- Display liked recipes -->
+<h1>Liked Recipes</h1>
+
+<div id="liked-recipes-list">
+    <!-- Liked recipes will be displayed here -->
+</div>
+
+<script src="/work.js">
+    // Populate liked recipes on the liked recipes page
+    const likedRecipesList = document.getElementById('liked-recipes-list');
+
+    likedRecipes.forEach(recipeId => {
+        const likedRecipeDiv = document.createElement('div');
+        likedRecipeDiv.textContent = `Liked Recipe ${recipeId}`;
+        likedRecipesList.appendChild(likedRecipeDiv);
+    });
+</script>
+
+</body>
+</html>

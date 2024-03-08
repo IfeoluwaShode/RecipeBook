@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - RecipeBook</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-image: url("image3.jpg");
+        background-size: cover;
+        background-position: center;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+      }
+
+      nav ul {
+        margin: 0;
+      }
+
+      nav a {
+        color: #fff;
+      }
+
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .container {
+        margin: 20px;
+        padding: 20px;
+        border-radius: 8px;
+        height: fit-content !important;
+      }
+
+      /* h1 {
+        color: whitesmoke;
+        font-size: 28px;
+        margin-bottom: 20px;
+      } */
+
+      label {
+        color: white;
+        font-size: 16px;
+      }
+
+      input {
+        font-size: 16px;
+        width: 100% !important;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+      }
+
+      button {
+        /* background-color: #4caf50; */
+        color: #fff;
+        padding: 12px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        height: auto;
+      }
+      /* 
+      button:hover {
+        background-color: #45a049;
+      } */
+
+      a {
+        color: #4caf50;
+      }
+
+      footer {
+        background-color: #000;
+        padding: 10px;
+        text-align: center;
+        color: #fff;
+      }
+
+
+      #username,
+      #password {
+        width: 400px;
+      }
+      label {
+        font-weight: 400;
+      }
+    </style>
+
+    <!-- for toast -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <main>
+      <section
+        class="container bg-black/20 backdrop-blur-md max-w-[86%] sm:max-w-[80%] md:max-w-[40%] shadow-md"
+      >
+        <h1 class="text-xl font-bold text-white mb-3 text-center">
+          Login to
+          <span class="text-black"
+            >Recipe<span class="text-green-500">Book</span></span
+          >
+        </h1>
+        <!-- <h1>Login to RecipeBook</h1> -->
+        <form id="form" action="/">
+          <div class="field">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="username"
+              name="email"
+              class="w-full rounded-md border-none outline-none h-[40px] px-5 bg-black/10 placeholder:text-white/50 text-white"
+              placeholder="ifekoder"
+              required
+            />
+          </div>
+
+          <div class="field mt-3">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="rounded-md border-none outline-none h-[40px] px-5 bg-black/10 placeholder:text-white/50 text-white"
+              placeholder="*******"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="rounded-md w-full flex justify-center items-center h-[40px] mt-5 transition text-white font-medium duration-500 bg-black/90 hover:bg-black/60"
+            id="submit-btn"
+          >
+            <span class="submit-text">Login</span>
+
+            <div
+              class="loader hidden border-gray-300 h-5 w-5 animate-spin rounded-full border-[2px] border-t-green-600"
+            />
+          </button>
+
+          <div class="flex w-full gap-3 justify-center items-center mt-2">
+            <div class="bg-black/40 w-[20%] h-[1px] rounded-md"></div>
+            <span class="">or</span>
+            <div class="bg-black/40 w-[20%] h-[1px] rounded-md"></div>
+          </div>
+
+          <button
+            class="bg-white/80 w-full flex justify-center mt-2 px-4 py-2 border flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
+            type="button"
+            id="google-btn"
+          >
+            <img
+              class="w-6 h-6"
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              loading="lazy"
+              alt="google logo"
+            />
+            <span>Login with Google</span>
+          </button>
+          <!-- </div> -->
+
+          <p class="text-center mt-1 text-white/70 mt-2">
+            Dont have an account
+            <a class="text-white" href="/signup.html">Signup</a>
+          </p>
+        </form>
+
+        <!-- <p>Don't have an account? <a href="#">Sign up here</a>.</p> -->
+      </section>
+    </main>
+    <footer>
+      <div class="footer-bottom">
+        <p>&copy; RecipeBook. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script defer type="module">
+      import { login, loginWithGoogle } from "./firebase.js";
+      var notyf = new Notyf();
+
+      const form = document.querySelector("#form");
+      const username = document.querySelector("#username");
+      const password = document.querySelector("#password");
+      const button = document.querySelector("#submit-btn");
+
+      const buttonText = document.querySelector(".submit-text");
+      const loader = document.querySelector(".loader");
+
+      const load = () => {
+        buttonText.classList.add("hidden");
+        loader.classList.remove("hidden");
+      };
+
+      const stopLoad = () => {
+        buttonText.classList.remove("hidden");
+        loader.classList.add("hidden");
+      };
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        load();
+        const credentials = {
+          email: username.value,
+          password: password.value,
+        };
+        login(credentials)
+          .then((userCredential) => {
+            const user = userCredential.user;
+
+            notyf.success(`Successfully Logged In ${user.displayName}`);
+
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 2000);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(error, errorCode);
+
+            if (errorCode === "auth/email-already-in-use") {
+              return notyf.error("Email is Already In Use!");
+            }
+            if (errorCode === "auth/invalid-login-credentials") {
+              return notyf.error("Invalid Login Credentials!");
+            }
+            notyf.error(errorMessage);
+          })
+          .finally(() => {
+            stopLoad();
+          });
+      });
+
+      const googleBtn = document.querySelector("#google-btn");
+
+      googleBtn.addEventListener("click", (e) => {
+        loginWithGoogle()
+          .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            // const credential = GoogleAuthProvider.credentialFromResult(result);
+            // const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+
+            notyf.success(`Successfully Logged In ${user.displayName}`);
+
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 2000);
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            // const credential = GoogleAuthProvider.credentialFromError(error);
+            notyf.error(errorMessage);
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Recipe</title>
+    <a href="main.html">
+        <img src="./Back_Arrow.svg.png" alt="Back to home page">
+    </a>
+    <style>
+        img {
+        width: 50px;
+        height: auto;
+        }
+
+        h1{
+            text-align: center;
+            font-weight: 800;
+            font-display: 10px;
+        }
+        body {
+            font-family: sans-serif;
+            background-image: url(https://images.unsplash.com/photo-1567769541715-8c71fe49fd43?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        }
+
+        form {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .success-message {
+            color: green;
+        }
+
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        #message-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto; /* Add this line to center the button horizontally */
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            /* Remove the 'align-items' property, as it is not needed for the button */
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Upload your Recipe here</h1>
+
+    <div id="message-container"></div>
+
+
+    <form onsubmit="return showMessage();">
+        <h2>Share your Recipe with us</h2>
+
+        <label for="recipeName">Recipe Name:</label>
+        <input type="text" id="recipeName" name="recipeName" placeholder="Enter recipe name">
+
+        <label for="recipeDescription">Recipe Description:</label>
+        <textarea id="recipeDescription" name="recipeDescription" placeholder="Enter recipe description"></textarea>
+
+        <label for="recipeIngredients">Ingredients:</label>
+        <textarea id="recipeIngredients" name="recipeIngredients" placeholder="Enter ingredients, separated by commas"></textarea>
+
+        <label for="recipeInstructions">Instructions:</label>
+        <textarea id="recipeInstructions" name="recipeInstructions" placeholder="Enter instructions, separated by numbered steps"></textarea>
+
+        <label for="recipeImage">Recipe Image:</label>
+        <input type="file" id="recipeImage" name="recipeImage" accept="image/*">
+
+        <button type="submit">Upload Recipe</button>
+    </form>
+
+    <script>
+        function showMessage() {
+            // You can use JavaScript to show a message dynamically
+            var messageContainer = document.getElementById('message-container');
+            var successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.innerText = 'Recipe uploaded successfully!';
+            messageContainer.appendChild(successMessage);
+
+            // Prevent the form from submitting (for demonstration purposes)
+            return false;
+        }
+    </script>
+</body>
+</html>
